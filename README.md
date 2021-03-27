@@ -53,6 +53,22 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
+# References
+* https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py, author: https://github.com/abramhindle, referenced: 26/03/2021 
+* https://github.com/abramhindle/WebSocketsExamples
+* https://stackoverflow.com/a/19589610, author: https://stackoverflow.com/users/344073/terry, referenced: 26/03/2021
+* https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent/data referenced: 26/03/2021
+* https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send, accessed: 11/03/21
+* https://stackoverflow.com/a/54061045 author: referenced: 25/03/2021
+* https://www.w3schools.com/html/html5_canvas.asp, accessed: 11/03/21
+* https://www.w3schools.com/tags/canvas_arc.asp, accessed: 11/03/21
+* https://www.w3schools.com/colors/colors_names.asp, accessed: 11/03/21
+* https://www.w3schools.com/js/js_ajax_http.asp, accessed: 11/03/21
+* https://stackoverflow.com/a/8416963, author: https://stackoverflow.com/users/398844/torben, accessed:11/03/2021
+* https://stackoverflow.com/a/10143166, author: https://stackoverflow.com/users/2347118/matt-mombrea, accessed: 11/03/2021
+* https://stackoverflow.com/a/39519299, author: https://stackoverflow.com/users/33/john, accessed: 11/03/2021
+* https://stackoverflow.com/a/14949045, author:https://stackoverflow.com/users/818182/austin-brunkhorst, accessed: 11/03/21 
+
 Contributors
 ============
 
