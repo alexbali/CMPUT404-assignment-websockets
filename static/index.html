@@ -125,7 +125,22 @@ function addEntity(entity, data) {
     world[entity] = data;
     drawNextFrame(); // (but should we?)
     //XXX: Send a XHTML Request that updates the entity you just modified!
+    if (isOpen(socket)){
+        //console.log("entity:",entity, " data: ",data);
+        new_data = {};
+        new_data[entity] = data;
+        //https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/send referenced: 26/03/2021
+        socket.send(JSON.stringify(new_data));
+    } else {
+        console.log("the socket is not open");
+    }
 }
+
+// https://stackoverflow.com/a/54061045 author: referenced: 25/03/2021
+function isOpen(ws) {
+    return ws.readyState === ws.OPEN;
+}
+
 var counter = 0;
 function addEntityWithoutName(data) {
     var name = "X"+(counter++)%100;
@@ -230,17 +245,23 @@ mouse = (function() {
 
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
+//https://stackoverflow.com/a/14949045, author:https://stackoverflow.com/users/818182/austin-brunkhorst, accessed: 11/03/21 
+var colorArr = ['DarkMagenta','DeepPink','OrangeRed'];
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+    addEntityWithoutName({'x':x,'y':y,'colour':colorArr[Math.floor(Math.random() * colorArr.length)]});
 });
 
+//https://stackoverflow.com/a/14949045, author:https://stackoverflow.com/users/818182/austin-brunkhorst, accessed: 11/03/21 
+var colorArr2 = ['LimeGreen','MediumSeaGreen','MediumSpringGreen','PaleGreen','SpringGreen']
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'red'});
+    addEntityWithoutName({'x':x,'y':y,'colour':colorArr2[Math.floor(Math.random() * colorArr2.length)]});
 });
 
+//https://stackoverflow.com/a/14949045, author:https://stackoverflow.com/users/818182/austin-brunkhorst, accessed: 11/03/21 
+var colorArr3 = ['aqua','cyan','crimson','DeepSkyBlue','HotPink','Lime','DarkOrchid','Yellow']
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'green',
-                          'radius':10});
+    addEntityWithoutName({'x':x,'y':y,'colour':colorArr3[Math.floor(Math.random() * colorArr3.length)],
+                          'radius':20});
 });
 
 
@@ -248,12 +269,18 @@ function update() {
     drawFrame();
 }
 
+var get_world_message = {
+    "coolbears": "nc"
+}
 
 function wsSetup() {
     var url = "ws://"+host+"/subscribe";   
     socket = new WebSocket(url);
     socket.onopen = function() {
         //XXX: TODO What are you going to do here?
+        console.log("successfully opened a socket!");
+        wscounter += 1;
+        socket.send(JSON.stringify(get_world_message));
     };
     socket.onerror = function(msg) {
         debug("WebSocket Error:" + msg.data);
@@ -261,7 +288,14 @@ function wsSetup() {
     socket.onmessage = function(msg) {  
         try {
             debug("WebSocket Recv:" + msg.data);
-            //XXX: TODO What are you going to do here?            
+            //XXX: TODO What are you going to do here?
+           // https://stackoverflow.com/a/19589610, author: https://stackoverflow.com/users/344073/terry, referenced: 26/03/2021
+            // https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent/data referenced: 26/03/2021
+            var message = JSON.parse(msg.data);
+            for (const key in message) {
+                world[key] = message[key];
+            }   
+            drawNextFrame();         
         } catch (e) {
             alert("socket on message: " + e);
         }
